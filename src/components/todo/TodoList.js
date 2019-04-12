@@ -1,17 +1,32 @@
 import React, {Component} from 'react';
 import {Table} from 'antd';
+import { observer, inject } from "mobx-react";
 
-export default class TodoList extends Component {
+@inject("todoStore")
+@observer
+class TodoList extends Component {
+constructor(props){
+    super(props);
+    this.state = {
+        data:[]
+    }
+}
+componentDidMount(){
+    this.setState({
+        data:this.props.todoStore.List
+    })
+}
+
     render() {
         const columns = [{
                 title: '代办事项',
-                dataIndex: 'todoName',
-                key: 'todoName'
+                dataIndex: 'todo',
+                key: 'todo'
             },
             {
-                title: '添加日期',
-                dataIndex: 'addDate',
-                key: 'addDate'
+                title: '截止日期',
+                dataIndex: 'todoDate',
+                key: 'todoDate'
             },
             {
                 title: '操作',
@@ -20,20 +35,12 @@ export default class TodoList extends Component {
                 width: 100,
                 render: () => < a href = "javascript:;" > 查看 </a>,
             },
-        ];
-        const data = [{
-            key: '1',
-            todoName: '学习react',
-            addDate: '2019-3-26 21:53',
-        }, {
-            key: '2',
-            todoName: '嘻嘻嘻',
-            addDate: '2019-3-26 21:58',
-        }];
+        ];       
         return (
             <>
-                <Table columns={columns} dataSource={data} />
+                <Table columns={columns} dataSource={this.state.data} />
             </>
         )
     }
 }
+export default TodoList;

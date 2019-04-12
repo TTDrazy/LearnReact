@@ -40,7 +40,7 @@ class App extends Component {
           onCollapse={this.onCollapse}
         >
           <div className="logo">
-            React教学
+            React
           </div>
           <Menu
             theme="dark"
