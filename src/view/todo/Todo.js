@@ -7,12 +7,12 @@ export default class Todo extends Component {
         super(props);
     }
     handleAdd=()=>{
-       this.props.history.push({pathname:TodoRouter.TODOADD});       
+       this.props.history.push({pathname:TodoRouter.TODOADD})
     }
     render() {
         let addToDoBtn = (<Button type="primary" onClick={()=>{this.handleAdd()}}>新增待办事项</Button>)
-        return (          
-            <>  
+        return (
+            <>
                 <Card extra={addToDoBtn}>
                     <TodoList />
                 </Card>

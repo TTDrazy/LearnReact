@@ -18,6 +18,20 @@ class TodoStore {
     Add({ todo, todoDate }) {
         this.todoList.push(new TodoModel(todo,todoDate).toObject());
     }
+    @action
+    RemoveItemByKey(key){
+       this.todoList = this.todoList.filter((item)=>item.key !== key);
+    }
+    @action
+    GetItemByKey(key){
+        return this.todoList.find((item) => item.key == key);
+    }
+    @action
+    EditItemByKey(key,data){
+       let todoItem =  this.todoList.find((item) => item.key == key);
+       todoItem.todo = data.todo;
+       todoItem.todoDate = data.todoDate;
+    }
     @computed get List(){
         return this.todoList;
     }

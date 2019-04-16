@@ -5,7 +5,7 @@ class TodoModel {
     @observable todo;
     @observable todoDate;
     constructor(todo,todoDate){
-        this.key = Math.random();
+        this.key = Math.floor(Math.random()*9999);
         this.todo = todo;
         this.todoDate = todoDate;
     }
