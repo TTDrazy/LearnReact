@@ -53,9 +53,9 @@ class App extends Component {
                 todo
                 </span>
             </Menu.Item>
-            <Menu.Item key="2">
+            <Menu.Item key="/count">
               <Icon type="desktop" />
-              <span>Option 2</span>
+              <span>count</span>
             </Menu.Item>
             <SubMenu
               key="sub1"

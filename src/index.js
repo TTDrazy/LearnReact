@@ -13,12 +13,14 @@ import 'moment/locale/zh-cn';
 import {BrowserRouter as Router,Route,} from 'react-router-dom';
 import TodoForm from './view/todo/TodoForm.js';
 import TodoEdit from './view/todo/TodoEdit.js';
+import Count from './components/count/Count';
+import CountStore from './stores/CountStore'
 let store = new Store();
 let todoStore = new TodoStore();
-
+let countStore = new CountStore();
 
 ReactDOM.render(
-    <Provider  store={store} todoStore={todoStore}>
+    <Provider  store={store} todoStore={todoStore} countStore = {countStore}>
         <Router>
             <LocaleProvider locale={zh_CN}>
                 <App>
@@ -26,6 +28,7 @@ ReactDOM.render(
                     <Route exact path={RouterVar.TodoRouter.TODO} component={Todo} />
                     <Route exact path={RouterVar.TodoRouter.TODOADD} component={TodoForm} />
                     <Route exact path={RouterVar.TodoRouter.TODOEDIT} component={TodoEdit}/>
+                    <Route exact path='/count' component={Count}/>
                 </App>
             </LocaleProvider>
         </Router>
