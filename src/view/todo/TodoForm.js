@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Card,Form, Input, Button,DatePicker} from 'antd';
 import { observer, inject } from 'mobx-react';
-import TodoRouter from '../../../../educate/ReactFramework/src/contants/TodoRouter';
+import TodoRouter from '../../contants/TodoRouter';
 
 @inject("todoStore")
 @observer
