@@ -61,9 +61,8 @@ class App extends Component {
               key="sub1"
               title={<span><Icon type="user" /><span>User</span></span>}
             >
-              <Menu.Item key="3">Tom</Menu.Item>
-              <Menu.Item key="4">Bill</Menu.Item>
-              <Menu.Item key="5">Alex</Menu.Item>
+              <Menu.Item key="/login">登录</Menu.Item>
+              <Menu.Item key="/register">注册</Menu.Item>
             </SubMenu>
             <SubMenu
               key="sub2"

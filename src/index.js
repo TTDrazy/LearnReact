@@ -14,13 +14,18 @@ import {BrowserRouter as Router,Route,} from 'react-router-dom';
 import TodoForm from './view/todo/TodoForm.js';
 import TodoEdit from './view/todo/TodoEdit.js';
 import Count from './components/count/Count';
-import CountStore from './stores/CountStore'
+import CountStore from './stores/CountStore';
+import Login from './components/login/Login';
+import Register from './components/register/Register';
+import Home from './components/user/Home.js';
+import UserStore from './stores/UserStore.js';
 let store = new Store();
 let todoStore = new TodoStore();
 let countStore = new CountStore();
+let userStore = new UserStore();
 
 ReactDOM.render(
-    <Provider  store={store} todoStore={todoStore} countStore = {countStore}>
+    <Provider  store={store} todoStore={todoStore} countStore = {countStore} userStore = {userStore}>
         <Router>
             <LocaleProvider locale={zh_CN}>
                 <App>
@@ -29,6 +34,9 @@ ReactDOM.render(
                     <Route exact path={RouterVar.TodoRouter.TODOADD} component={TodoForm} />
                     <Route exact path={RouterVar.TodoRouter.TODOEDIT} component={TodoEdit}/>
                     <Route exact path='/count' component={Count}/>
+                    <Route exact path='/login' component={Login}/>
+                    <Route exact path='/register' component={Register}/>
+                    <Route exact path='/user' component={Home}/>
                 </App>
             </LocaleProvider>
         </Router>
