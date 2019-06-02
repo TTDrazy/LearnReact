@@ -19,6 +19,10 @@ import Login from './components/login/Login';
 import Register from './components/register/Register';
 import Home from './components/user/Home.js';
 import UserStore from './stores/UserStore.js';
+import ShowArticle from './components/user/article/ShowArticle.js';
+import AddArticle from './components/user/article/AddArticle.js';
+import EditArticle from './components/user/article/EditArticle.js';
+import SeeArticle from './components/user/article/SeeArticle.js';
 let store = new Store();
 let todoStore = new TodoStore();
 let countStore = new CountStore();
@@ -37,6 +41,10 @@ ReactDOM.render(
                     <Route exact path='/login' component={Login}/>
                     <Route exact path='/register' component={Register}/>
                     <Route exact path='/user' component={Home}/>
+                    <Route exact path='/article' component={ShowArticle}/>
+                    <Route exact path='/article/add' component={AddArticle}/>
+                    <Route exact path='/article/edit' component={EditArticle}/>
+                    <Route exact path='/article/see' component={SeeArticle}/>
                 </App>
             </LocaleProvider>
         </Router>
