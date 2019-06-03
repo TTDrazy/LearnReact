@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Button } from "antd";
+import { Table, Button, message } from "antd";
 import { withRouter, Link } from "react-router-dom";
 import { inject, observer } from "mobx-react";
 import axios from "axios";
@@ -31,8 +31,50 @@ class ShowArticle extends Component {
                 });
             });
     }
-    removeArticle(key) {
-        console.log(key);
+    removeArticleById(id) {
+        if (!!id) {
+            const newArticle = this.state.article.filter(
+                item => item.id !== id
+            );
+            this.setState({
+                article: newArticle
+            });
+            axios
+                .delete(
+                    `http://5bd30967c8f9e400130cb86b.mockapi.io/article/${id}`
+                )
+                .then(message.success(`删除文章编号：${id}的文章成功！`));
+        } else {
+            message.warning("操作无效！");
+        }
+    }
+    goToSeeArticle(id) {
+        if (!!id) {
+            this.props.history.push(
+                { pathname: "/article/see" },
+                {
+                    query: {
+                        id: id
+                    }
+                }
+            );
+        }else {
+            message.warning("操作无效！");
+        }
+    }
+    goToEditArticle(id) {
+        if (!!id) {
+            this.props.history.push(
+                { pathname: "/article/edit" },
+                {
+                    query: {
+                        id: id
+                    }
+                }
+            );
+        }else {
+            message.warning("操作无效！");
+        }
     }
 
     render() {
@@ -55,18 +97,21 @@ class ShowArticle extends Component {
             {
                 title: "操作",
                 key: "operation",
-                render: ({ key }) => (
+                render: ({ id }) => (
                     <>
-                        <Button type="primary">
-                            <Link to="/article/see">查看</Link>
+                        <Button
+                            type="primary"
+                            onClick={() => this.goToSeeArticle(id)}
+                        >
+                            查看
                         </Button>
-                        <Button type="info">
-                            <Link to="/article/edit">编辑</Link>
+                        <Button type="info" onClick={() => this.goToEditArticle(id)}>
+                            编辑
                         </Button>
                         <Button
                             type="danger"
                             onClick={() => {
-                                this.removeArticle(key);
+                                this.removeArticleById(id);
                             }}
                         >
                             删除
@@ -77,7 +122,7 @@ class ShowArticle extends Component {
         ];
         return (
             <>
-                <Table columns={columns} dataSource={this.state.article} />
+                <Table columns={columns} dataSource={this.state.article} key={Math.random()}/>
                 <Button type="primary" style={{ margin: "0 auto" }}>
                     <Link to="/article/add">新增文章</Link>
                 </Button>
