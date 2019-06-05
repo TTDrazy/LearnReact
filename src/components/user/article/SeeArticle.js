@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
-import { message, Layout, Typography } from "antd";
-import moment from "moment";
+import { message, Layout, Typography, Button } from "antd";
 
 @withRouter
 class SeeArticle extends Component {
@@ -40,7 +39,9 @@ class SeeArticle extends Component {
         const { Title } = Typography;
         const { Header, Content } = Layout;
         let { articleName, author, date, content } = this.state;
-        let normalDate = moment(date).format("YYYY/MM/DD HH:mm:ss");
+        let normalDate = new Date(parseInt(date) * 1000)
+            .toLocaleString()
+            .replace(/:\d{1,2}$/, " ");
         return (
             <>
                 <Header style={{ backgroundColor: "rgba(0,160,233,0.7)" }}>
@@ -60,8 +61,7 @@ class SeeArticle extends Component {
                     <br />
                     <h4
                         style={{
-                            textAlign: "right",
-                            color: "#fff"
+                            textAlign: "right"
                         }}
                     >
                         作者：{author}
@@ -69,6 +69,9 @@ class SeeArticle extends Component {
                         最后修改日期：{normalDate}
                     </h4>
                 </Content>
+                <Button type="primary" style={{ margin: " 2% 0 0 45%" }}>
+                    <Link to="/article">返回</Link>
+                </Button>
             </>
         );
     }

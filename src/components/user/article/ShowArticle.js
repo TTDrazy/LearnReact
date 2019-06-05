@@ -26,6 +26,12 @@ class ShowArticle extends Component {
             .then(res => {
                 let allArticle = res.data;
                 allArticle = allArticle.filter(item => item.author === author);
+                allArticle.map(item => {
+                    let normalDate = new Date(parseInt(item.date) * 1000)
+                        .toLocaleString()
+                        .replace(/:\d{1,2}$/, " ");
+                    item.date = normalDate;
+                });
                 this.setState({
                     article: allArticle
                 });
@@ -58,7 +64,7 @@ class ShowArticle extends Component {
                     }
                 }
             );
-        }else {
+        } else {
             message.warning("操作无效！");
         }
     }
@@ -72,7 +78,7 @@ class ShowArticle extends Component {
                     }
                 }
             );
-        }else {
+        } else {
             message.warning("操作无效！");
         }
     }
@@ -105,7 +111,10 @@ class ShowArticle extends Component {
                         >
                             查看
                         </Button>
-                        <Button type="info" onClick={() => this.goToEditArticle(id)}>
+                        <Button
+                            type="info"
+                            onClick={() => this.goToEditArticle(id)}
+                        >
                             编辑
                         </Button>
                         <Button
@@ -122,9 +131,13 @@ class ShowArticle extends Component {
         ];
         return (
             <>
-                <Table columns={columns} dataSource={this.state.article} key={Math.random()}/>
-                <Button type="primary" style={{ margin: "0 auto" }}>
-                    <Link to="/article/add">新增文章</Link>
+                <Table
+                    columns={columns}
+                    dataSource={this.state.article}
+                    key={Math.random()}
+                />
+                <Button type="primary" style={{ margin: " 2% 0 0 45%" }}>
+                    <Link to="article/add">新增文章</Link>
                 </Button>
             </>
         );

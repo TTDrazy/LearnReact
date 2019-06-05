@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import axios from "axios";
-import { message, Layout, Typography } from "antd";
+import { message, Layout, Typography, Input, Button } from "antd";
 import moment from "moment";
 
 @withRouter
@@ -16,6 +16,30 @@ class EditArticle extends Component {
             content: ""
         };
     }
+    handleChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+    submitArticle = () => {
+        const { id } = this.state;
+        if (!!id) {
+            let nowDate = moment().format("X");
+            this.setState({
+                date: nowDate
+            });
+            let { articleName, content } = this.state;
+            axios
+                .put(
+                    `http://5bd30967c8f9e400130cb86b.mockapi.io/article/${id}`,
+                    { articleName,date:nowDate, content }
+                )
+                .then(() => {
+                    message.success("修改成功！");
+                    this.props.history.push("/article");
+                });
+        }
+    };
     componentDidMount() {
         const { query } = this.props.location.state;
         const { id } = query;
@@ -38,9 +62,12 @@ class EditArticle extends Component {
     }
     render() {
         const { Title } = Typography;
+        const { TextArea } = Input;
         const { Header, Content } = Layout;
         let { articleName, author, date, content } = this.state;
-        let normalDate = moment(date).format("YYYY/MM/DD HH:mm:ss");
+        let normalDate = new Date(parseInt(date) * 1000)
+            .toLocaleString()
+            .replace(/:\d{1,2}$/, " ");
         return (
             <>
                 <Header style={{ backgroundColor: "rgba(0,160,233,0.7)" }}>
@@ -52,17 +79,26 @@ class EditArticle extends Component {
                             paddingTop: "1%"
                         }}
                     >
-                      <input></input>
-                        {articleName}
+                        <Input
+                            name="articleName"
+                            value={articleName}
+                            onChange={e => this.handleChange(e)}
+                        />
                     </Title>
                 </Header>
                 <Content style={{ backgroundColor: "pink", padding: "5%" }}>
-                    <h3>{content}</h3>
+                    <h3>
+                        <TextArea
+                            autosize
+                            name="content"
+                            value={content}
+                            onChange={e => this.handleChange(e)}
+                        />
+                    </h3>
                     <br />
                     <h4
                         style={{
-                            textAlign: "right",
-                            color: "#fff"
+                            textAlign: "right"
                         }}
                     >
                         作者：{author}
@@ -70,6 +106,16 @@ class EditArticle extends Component {
                         最后修改日期：{normalDate}
                     </h4>
                 </Content>
+                <Button
+                    type="primary"
+                    style={{ margin: " 2% 0 0 43%" }}
+                    onClick={this.submitArticle}
+                >
+                    提交
+                </Button>
+                <Button type="default" style={{ margin: " 2% 30% 0 0" }}>
+                    <Link to="/article">返回</Link>
+                </Button>
             </>
         );
     }
